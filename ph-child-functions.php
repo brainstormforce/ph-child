@@ -25,7 +25,7 @@ function ph_child_is_current_user_allowed_to_comment() {
 	$enabled_roles = get_option( 'ph_child_enabled_comment_roles', false );
 
 	// enable all if it hasn't been saved yet.
-	if ( false === $enabled_roles && is_bool( $enabled_roles ) ) {
+	if ( $enabled_roles === false && is_bool( $enabled_roles ) ) {
 		return true;
 	}
 
@@ -48,7 +48,7 @@ function ph_child_is_current_user_allowed_to_comment() {
  *
  * @return void
  */
-function ph_child_dismiss_js() {
+function ph_child_dismiss_js(): void {
 	$nonce = wp_create_nonce( 'ph_child_dismiss_nonce' );
 	?>
 	<script>
@@ -78,12 +78,12 @@ function ph_child_dismiss_js() {
  *
  * @return void
  */
-function ph_child_ajax_notice_handler() {
+function ph_child_ajax_notice_handler(): void {
 	$type = isset( $_POST['type'] ) ? sanitize_text_field( $_POST['type'] ) : false;
 
 	if ( current_user_can( 'manage_options' ) && check_ajax_referer( 'ph_child_dismiss_nonce', 'nonce' ) && $type ) {
-		update_option( "dismissed-$type", true );
-		update_site_option( "dismissed-$type", true );
+		update_option( "dismissed-{$type}", true );
+		update_site_option( "dismissed-{$type}", true );
 	}
 
 	wp_die(); // Always terminate AJAX requests with wp_die().
@@ -91,13 +91,12 @@ function ph_child_ajax_notice_handler() {
 
 add_action( 'wp_ajax_ph_child_dismissed_notice_handler', 'ph_child_ajax_notice_handler' );
 
-
 /**
  * Flywheel exclusions notice
  *
  * @return void
  */
-function ph_child_flywheel_exclusions_notice() {
+function ph_child_flywheel_exclusions_notice(): void {
 	// on wp flywheel.
 	if ( ! defined( 'FLYWHEEL_CONFIG_DIR' ) ) {
 		return;
@@ -123,7 +122,7 @@ function ph_child_flywheel_exclusions_notice() {
  *
  * @return void
  */
-function ph_child_wpengine_exclusions_notice() {
+function ph_child_wpengine_exclusions_notice(): void {
 	// on wp engine.
 	if ( ! defined( 'WPE_APIKEY' ) ) {
 		return;

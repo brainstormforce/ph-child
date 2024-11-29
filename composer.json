@@ -9,7 +9,8 @@
     "phpstan/phpstan": "^1.12",
     "php-stubs/wordpress-stubs": "^6.5",
     "php-stubs/generator": "^0.8.4",
-    "phpunit/phpunit": "^10.5"
+    "phpunit/phpunit": "^10.5",
+    "nunomaduro/phpinsights": "^2.12"
   },
   "scripts": {
     "format": "phpcbf --standard=phpcs.xml.dist --report-summary --report-source",
