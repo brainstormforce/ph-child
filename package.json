@@ -1,6 +1,6 @@
 {
   "name": "projecthuddle-child",
-  "version": "1.2.6",
+  "version": "1.2.6.1",
   "description": "Collect note-style feedback from your client’s websites and sync them with your SureFeedback parent project",
   "main": "index.js",
   "scripts": {

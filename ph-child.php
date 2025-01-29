@@ -5,7 +5,7 @@
  * Description: Collect note-style feedback from your client’s websites and sync them with your SureFeedback parent project.
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.2.6
+ * Version: 1.2.6.1
  *
  * Requires at least: 4.7
  * Tested up to: 6.7.1
@@ -1109,7 +1109,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 				'type'        => 'custom',
 				'id'          => 'ph_multisite_network_button',
 				'label'       => __( 'Add All Sub-sites', 'ph-child' ),
-				'description' => __( 'This will setup ProjectHuddle for all sub-sites in this network.', 'ph-child' ),
+				'description' => __( 'This will setup SureFeedback for all sub-sites in this network.', 'ph-child' ),
 				'default'     => '',
 				'html'        => '<button class="button button-primary" id="add_all_subsites_to_projecthuddle2">' . __( 'Add Sites', 'ph-child' ) . '</button><span id="ph_network_add_sites_status" class="running"></span>',
 			);
@@ -1118,7 +1118,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 				'type'        => 'custom',
 				'id'          => 'ph_multisite_network_button_remove',
 				'label'       => __( 'Remove All Sub-sites', 'ph-child' ),
-				'description' => __( 'This will remove ProjectHuddle for all sub-sites in this network.', 'ph-child' ),
+				'description' => __( 'This will remove SureFeedback for all sub-sites in this network.', 'ph-child' ),
 				'default'     => '',
 				'html'        => '<button class="button button-primary" id="remove_all_subsites_to_projecthuddle2">' . __( 'Remove Sites', 'ph-child' ) . '</button><span id="ph_network_remove_sites_status" class="running"></span>',
 			);
@@ -1151,7 +1151,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 				'description' => '',
 				'default'     => '',
 				'html'		  => '<div class="ph-msn-msg-alert alert-warning" role="alert">' . 
-									sprintf('It looks like you have already configured the sub-sites to ProjectHuddle dashboard on the <a href="%s">main site.</a>', get_site_url(get_main_site_id(), 'wp-admin/admin.php?page=project_huddle_settings&tab=advanced')) 
+									sprintf('It looks like you have already configured the sub-sites to SureFeedback dashboard on the <a href="%s">main site.</a>', get_site_url(get_main_site_id(), 'wp-admin/admin.php?page=project_huddle_settings&tab=advanced')) 
 								 . '</div>'
 			);
 
@@ -1180,7 +1180,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 		}
 
 		/**
-		 * Handles the AJAX request for adding all sub-sites to ProjectHuddle.
+		 * Handles the AJAX request for adding all sub-sites to SureFeedback.
 		 *
 		 * @return void
 		 */
@@ -1222,7 +1222,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 					wp_send_json_success(
 						array(
 							'success' => true,
-							'message' => __( 'All sub-sites have been added to ProjectHuddle.', 'ph-child' ),
+							'message' => __( 'All sub-sites have been added to SureFeedback.', 'ph-child' ),
 						),
 						200
 					);
@@ -1245,7 +1245,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 					wp_send_json_success(
 						array(
 							'success' => true,
-							'message' => __( 'All sub-sites have been removed from ProjectHuddle.', 'ph-child' ),
+							'message' => __( 'All sub-sites have been removed from SureFeedback.', 'ph-child' ),
 						),
 						200
 					);
