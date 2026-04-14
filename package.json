@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/ProjectHuddle/ph-child#readme",
   "devDependencies": {
-    "grunt": "^1.6.1",
+    "grunt": "^1.6.2",
     "grunt-contrib-compress": "^2.0.0"
   }
 }
