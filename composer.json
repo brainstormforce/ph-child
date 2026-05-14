@@ -25,7 +25,7 @@
   "require": {
     "php-stubs/wordpress-stubs": "^6.6",
     "symfony/http-kernel": "^7.1",
-    "symfony/dependency-injection": "^7.1",
+    "symfony/dependency-injection": "^8.0",
     "symfony/translation-contracts": "^3.5"
   }
 }
