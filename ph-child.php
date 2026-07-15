@@ -1055,6 +1055,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 					ph.defer = true;
 					ph.charset = 'UTF-8';
 					ph.src = g + '&v=' + (new Date()).getTime();
+					ph.src += '&ph_locale=' + (d.documentElement.lang || '').replace('-', '_');
 					ph.src += t ? '&' + k + '=' + t : '';
 					s.parentNode.insertBefore(ph, s);
 				})(document, 'script', '<?php echo esc_url_raw( "//$url" ); ?>', 'ph_access_token');
