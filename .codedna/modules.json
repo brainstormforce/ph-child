@@ -1,0 +1,13 @@
+{
+  "modules": [
+    {
+      "id": "ph-child",
+      "path": ".",
+      "claude": "CLAUDE.md",
+      "architecture": "architecture.md",
+      "language": "php",
+      "confidence": "high",
+      "reason": "pinned"
+    }
+  ]
+}
