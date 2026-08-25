@@ -1,0 +1,15 @@
+{
+  "mode": "auto",
+  "modules": [
+    "."
+  ],
+  "moduleRoots": [
+    "."
+  ],
+  "ignore": [
+    "node_modules",
+    ".git",
+    "vendor",
+    "tests"
+  ]
+}
