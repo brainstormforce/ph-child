@@ -366,6 +366,11 @@ if ( ! class_exists( 'PH_Child' ) ) :
 		 */
 		public function register_installation() {
 			update_option( 'ph_child_installed', true );
+
+			// fresh installs only allow administrators until other roles are chosen; never overwrite a saved choice.
+			if ( false === get_option( 'ph_child_enabled_comment_roles', false ) ) {
+				add_option( 'ph_child_enabled_comment_roles', array( 'administrator' => 'administrator' ) );
+			}
 		}
 
 		/**
@@ -744,7 +749,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 				?>
 				<br><span class="description">
 				<?php
-				esc_html_e( 'Allow above user roles to view comments on your site without access token.', 'ph-child' );
+				esc_html_e( 'Logged-in users with the selected roles can view and add comments without the project access link. The project access token is added to the page for these users, so only select roles you trust.', 'ph-child' );
 				?>
 				</span> 
 				<?php

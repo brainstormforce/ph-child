@@ -24,9 +24,14 @@ function ph_child_is_current_user_allowed_to_comment() {
 	// get enabled roles.
 	$enabled_roles = get_option( 'ph_child_enabled_comment_roles', false );
 
-	// enable all if it hasn't been saved yet.
+	// enable all if it hasn't been saved yet (installs from before the activation default existed).
 	if ( false === $enabled_roles && is_bool( $enabled_roles ) ) {
 		return true;
+	}
+
+	// saving with every role unticked stores a non-array value: nobody is allowed.
+	if ( ! is_array( $enabled_roles ) ) {
+		return false;
 	}
 
 	// otherwise filter by user.
