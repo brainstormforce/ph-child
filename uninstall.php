@@ -28,3 +28,15 @@ delete_option( 'ph_child_allow_guests' );
 delete_option( 'ph_child_connection_status' );
 delete_option( 'ph_child_commenters' );
 delete_option( 'ph_child_manual_connection' );
+delete_option( 'ph_child_id' );
+delete_option( 'ph_child_admin' );
+delete_option( 'ph_child_enabled_comment_roles' );
+delete_option( 'dismissed-ph-review-comment-roles' );
+delete_site_option( 'dismissed-ph-review-comment-roles' );
+
+// white label options.
+delete_option( 'ph_child_plugin_name' );
+delete_option( 'ph_child_plugin_description' );
+delete_option( 'ph_child_plugin_author' );
+delete_option( 'ph_child_plugin_author_url' );
+delete_option( 'ph_child_plugin_link' );

@@ -5,7 +5,7 @@
  * Description: Collect note-style feedback from your client’s websites and sync them with your SureFeedback parent project.
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.2.13
+ * Version: 1.2.14
  *
  * Requires at least: 4.7
  * Tested up to: 7.1
@@ -120,6 +120,9 @@ if ( ! class_exists( 'PH_Child' ) ) :
 			add_action( 'admin_init', array( $this, 'ph_custom_inline_script' ) );
 
 			add_action( 'wp_footer', array( $this, 'ph_user_data' ) );
+
+			// ask admins to review comment roles on sites that never saved them.
+			add_action( 'admin_notices', 'ph_child_comment_roles_notice' );
 
 			// show script on front end and maybe admin.
 			if ( ! is_admin() ) {
@@ -366,6 +369,11 @@ if ( ! class_exists( 'PH_Child' ) ) :
 		 */
 		public function register_installation() {
 			update_option( 'ph_child_installed', true );
+
+			// fresh installs only allow administrators until other roles are chosen; never overwrite a saved choice.
+			if ( false === get_option( 'ph_child_enabled_comment_roles', false ) ) {
+				add_option( 'ph_child_enabled_comment_roles', array( 'administrator' => 'administrator' ) );
+			}
 		}
 
 		/**
@@ -744,7 +752,7 @@ if ( ! class_exists( 'PH_Child' ) ) :
 				?>
 				<br><span class="description">
 				<?php
-				esc_html_e( 'Allow above user roles to view comments on your site without access token.', 'ph-child' );
+				esc_html_e( 'Logged-in users with the selected roles can view and add comments without the project access link. The project access token is added to the page for these users, so only select roles you trust.', 'ph-child' );
 				?>
 				</span> 
 				<?php
@@ -758,8 +766,13 @@ if ( ! class_exists( 'PH_Child' ) ) :
 		 */
 		public function allow_guests() {
 			?>
-				<input type="checkbox" name="ph_child_allow_guests" <?php checked( get_option( 'ph_child_allow_guests', false ), 'on' ); ?>>
-				<?php esc_html_e( 'Allow the site visitors to view and add comments on your site without access token.', 'ph-child' ); ?><br>
+				<label>
+					<input type="checkbox" name="ph_child_allow_guests" <?php checked( get_option( 'ph_child_allow_guests', false ), 'on' ); ?>>
+					<?php esc_html_e( 'Allow every site visitor to view and add comments on your site, without needing the project access link.', 'ph-child' ); ?>
+				</label>
+				<p class="description">
+					<?php esc_html_e( 'Warning: this adds the project access token to every page of your site, so anyone who views the page source can copy it and use it to access this project in SureFeedback. Turning this off stops adding the token to pages but does not revoke a token that has already been copied.', 'ph-child' ); ?>
+				</p>
 				<?php
 		}
 
@@ -1007,20 +1020,20 @@ if ( ! class_exists( 'PH_Child' ) ) :
 		 */
 		public function has_valid_cookie() {
 			$token = get_option( 'ph_child_access_token', '' );
-			if ( ! $token ) {
+			if ( ! $token || ! is_string( $token ) ) {
 				return false;
 			}
 
-			// get token from url.
-			$url_token = isset( $_GET['ph_access_token'] ) ? sanitize_text_field( $_GET['ph_access_token'] ) : '';
+			// get token from url, falling back to the cookie.
+			$url_token = isset( $_GET['ph_access_token'] ) && is_string( $_GET['ph_access_token'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only token comparison, no state change.
+				? sanitize_text_field( wp_unslash( $_GET['ph_access_token'] ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				: '';
 
-			if ( ! $url_token ) {
-				if ( isset( $_COOKIE['ph_access_token'] ) ) {
-					$url_token = $_COOKIE['ph_access_token'];
-				}
+			if ( ! $url_token && isset( $_COOKIE['ph_access_token'] ) && is_string( $_COOKIE['ph_access_token'] ) ) {
+				$url_token = sanitize_text_field( wp_unslash( $_COOKIE['ph_access_token'] ) );
 			}
 
-			return $url_token === $token;
+			return '' !== $url_token && hash_equals( $token, $url_token );
 		}
 
 		/**
