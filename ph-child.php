@@ -5,7 +5,7 @@
  * Description: Collect note-style feedback from your client’s websites and sync them with your SureFeedback parent project.
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 1.2.13
+ * Version: 1.2.14
  *
  * Requires at least: 4.7
  * Tested up to: 7.1
