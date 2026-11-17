@@ -47,7 +47,7 @@ All you need to do is install the plugin on the site you want feedback on and it
 The purpose of this plugin is to make it simple to get targeted feedback from clients on web designs. All you have to do is install the [SureFeedback](https://surefeedback.com) plugin and let your clients select areas of your design to add their own comments. Everything is tracked within the plugin. It's so easy to use!
 
 == Changelog ==
-= 1.2.14 =
+= 1.2.14 - 18 November 2026 =
 * Fix: This update addressed security bugs. Props to Ekene Umegakwe for privately reporting them to our team. Please make sure you are using the latest version on your website.
 
 = 1.2.13 =
