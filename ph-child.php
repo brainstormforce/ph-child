@@ -121,6 +121,9 @@ if ( ! class_exists( 'PH_Child' ) ) :
 
 			add_action( 'wp_footer', array( $this, 'ph_user_data' ) );
 
+			// ask admins to review comment roles on sites that never saved them.
+			add_action( 'admin_notices', 'ph_child_comment_roles_notice' );
+
 			// show script on front end and maybe admin.
 			if ( ! is_admin() ) {
 				add_action( 'wp_footer', array( $this, 'script' ) );

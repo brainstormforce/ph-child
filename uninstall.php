@@ -31,6 +31,8 @@ delete_option( 'ph_child_manual_connection' );
 delete_option( 'ph_child_id' );
 delete_option( 'ph_child_admin' );
 delete_option( 'ph_child_enabled_comment_roles' );
+delete_option( 'dismissed-ph-review-comment-roles' );
+delete_site_option( 'dismissed-ph-review-comment-roles' );
 
 // white label options.
 delete_option( 'ph_child_plugin_name' );
