@@ -48,11 +48,7 @@ The purpose of this plugin is to make it simple to get targeted feedback from cl
 
 == Changelog ==
 = 1.2.14 =
-* Improvement: Clarified the Site Visitors setting and added a note on how the project access link is shared.
-* Improvement: New installs now allow only Administrators to view and add comments by default.
-* Improvement: Added a notice asking administrators to review Comments Visibility Access when it has not been saved yet.
-* Fix: Tightened project access link validation.
-* Fix: All plugin settings are now removed when the plugin is deleted.
+* Fix: This update addressed security bugs. Props to Ekene Umegakwe for privately reporting them to our team. Please make sure you are using the latest version on your website.
 
 = 1.2.13 =
 * Fix: Prevented the connection access token and signature from being readable by non-administrator users via the XML-RPC wp.getOptions method. Props to Patchstack for privately reporting it to our team. Please make sure you are using the latest version on your website.
