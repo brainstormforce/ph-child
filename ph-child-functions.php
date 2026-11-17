@@ -24,9 +24,14 @@ function ph_child_is_current_user_allowed_to_comment() {
 	// get enabled roles.
 	$enabled_roles = get_option( 'ph_child_enabled_comment_roles', false );
 
-	// enable all if it hasn't been saved yet.
+	// enable all if it hasn't been saved yet (installs from before the activation default existed).
 	if ( false === $enabled_roles && is_bool( $enabled_roles ) ) {
 		return true;
+	}
+
+	// saving with every role unticked stores a non-array value: nobody is allowed.
+	if ( ! is_array( $enabled_roles ) ) {
+		return false;
 	}
 
 	// otherwise filter by user.
@@ -90,6 +95,45 @@ function ph_child_ajax_notice_handler() {
 }
 
 add_action( 'wp_ajax_ph_child_dismissed_notice_handler', 'ph_child_ajax_notice_handler' );
+
+/**
+ * Ask administrators to review Comments Visibility Access when it has never been saved.
+ *
+ * Until the roles are saved, every logged-in user can comment and gets the project
+ * access token on the page. Fresh installs save an Administrator-only default on
+ * activation, so this only shows on sites that were set up before that default existed.
+ *
+ * @return void
+ */
+function ph_child_comment_roles_notice() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	// roles have been saved (including with none ticked).
+	if ( false !== get_option( 'ph_child_enabled_comment_roles', false ) ) {
+		return;
+	}
+
+	// dismissed notice.
+	if ( get_site_option( 'dismissed-ph-review-comment-roles', false ) ) {
+		return;
+	}
+
+	$plugin_name  = get_option( 'ph_child_plugin_name', false );
+	$plugin_name  = $plugin_name ? $plugin_name : 'SureFeedback';
+	$settings_url = admin_url( 'options-general.php?page=feedback-connection-options&tab=general' );
+	?>
+	<div class="notice notice-warning is-dismissible ph-notice" data-notice="ph-review-comment-roles">
+		<p>
+			<strong><?php echo esc_html( $plugin_name ); ?>:</strong>
+			<?php esc_html_e( 'Every logged-in user can currently view and add comments on your site, and the project access token is added to the page for them. Please review Comments Visibility Access and save the roles you want to allow.', 'ph-child' ); ?>
+		</p>
+		<p><a class="button button-secondary" href="<?php echo esc_url( $settings_url ); ?>"><?php esc_html_e( 'Review Comments Visibility Access', 'ph-child' ); ?></a></p>
+	</div>
+	<?php
+	ph_child_dismiss_js();
+}
 
 
 /**
